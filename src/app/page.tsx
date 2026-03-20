@@ -113,10 +113,8 @@ export default function Home() {
             </div>
             
             <a 
-              href={videoData.videoUrl}
+              href={`/api/proxy?url=${encodeURIComponent(videoData.videoUrl)}`}
               download="reel.mp4"
-              target="_blank"
-              rel="noreferrer"
               className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-[0_0_40px_-10px_rgba(147,51,234,0.5)] active:scale-95"
             >
               <Download className="h-5 w-5" />

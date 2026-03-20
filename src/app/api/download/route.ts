@@ -24,9 +24,16 @@ export async function POST(req: Request) {
       youtubeSkipDashManifest: true,
     });
 
+    const extractedUrl = videoData.url || (videoData.formats ? (videoData.formats.find((f: any) => f.url && f.ext === 'mp4')?.url || videoData.formats[0]?.url) : null);
+
+    if (!extractedUrl) {
+      console.error('No video URL extracted from yt-dlp:', videoData);
+      return NextResponse.json({ error: 'Could not extract video URL. The reel might be private or not downloadable.' }, { status: 400 });
+    }
+
     return NextResponse.json({
       success: true,
-      videoUrl: videoData.url,
+      videoUrl: extractedUrl,
       thumbnail: videoData.thumbnail,
       title: videoData.title || 'Instagram Reel',
     });
